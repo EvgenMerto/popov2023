@@ -2,7 +2,7 @@ body {
 	font-family: Tahoma, Verdana, Geneva, sans-serif;
 	margin: 6em 6em;
 	font-weight: bold;
-	background: src ("5.jpg")
+	background: gray
 }
 ul {
 	list-style-type: none;
