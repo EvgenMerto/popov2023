@@ -1,5 +1,5 @@
 body {
-    background-image: url('путь_к_картинке.jpg'); /* Укажите путь к желаемой картинке */
+    background-image: url('5.jpg'); /* Укажите путь к желаемой картинке */
     background-size: cover; /* Масштабирование фона до заполнения всего контейнера */
     background-position: center; /* Центрирование картинки по горизонтали и вертикали */
     background-repeat: no-repeat; /* Запрет повторения фоновой картинки */
