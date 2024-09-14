@@ -60,20 +60,6 @@ tr:hover td {
 <a href="https://color.adobe.com/ru/create/color-wheel">колесо оборзения<a/>
 <a href="https://www.awwwards.com/">чарт продажных сайтов<a/>
 <a href="page1.html">Мини-гайд</a>
-  
-   <table border="1">
-    <tr>
-        <th>Заголовок 1</th>
-        <th>Заголовок 2</th>
-    </tr>
-    <tr>
-        <td>Ячейка 1-1</td>
-        <td>Ячейка 1-2</td>
-    </tr>
-    <tr>
-        <td>Ячейка 2-1</td>
-        <td>Ячейка 2-2</td>
-    </tr>
 
    <video width="320" height="240" controls="controls" poster="logo.png">
 	<source src="video1.mp4" type="video/mp4">
@@ -125,4 +111,85 @@ tr:hover td {
   <input type="submit">
   <input type="reset">
   </fieldset>
+	
+	    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <div>
+        <label for="colorPicker">Выберите цвет:</label>
+        <input type="color" id="colorPicker">
+        <label for="lineWidth">Толщина линии:</label>
+        <input type="number" id="lineWidth" min="1" max="10" value="2">
+        <button onclick="setEraser()">Ластик</button>
+        <button onclick="clearCanvas()">Очистить</button>
+    </div>
+
+    <script>
+        // JavaScript код для редактора
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        // Настройка начальных параметров
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "black";
+        var isEraser = false;
+
+        // Обработчик события нажатия кнопки мыши
+        canvas.addEventListener("mousedown", function(event) {
+            // Получаем координаты клика
+            var x = event.pageX - canvas.offsetLeft;
+            var y = event.pageY - canvas.offsetTop;
+
+            // Начинаем рисование
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+
+            // Обработчик события перемещения мыши
+            canvas.addEventListener("mousemove", draw);
+
+            // Обработчик события отпускания кнопки мыши
+            canvas.addEventListener("mouseup", function() {
+                // Заканчиваем рисование
+                canvas.removeEventListener("mousemove", draw);
+            });
+
+            // Функция рисования
+            function draw(event) {
+                var x = event.pageX - canvas.offsetLeft;
+                var y = event.pageY - canvas.offsetTop;
+
+                if (isEraser) {
+                    ctx.clearRect(x - 5, y - 5, 10, 10); // Используем ластик для стирания
+                } else {
+                    // Получаем выбранный цвет
+                    var color = document.getElementById("colorPicker").value;
+
+                    // Получаем выбранную толщину линии
+                    var lineWidth = document.getElementById("lineWidth").value;
+                    ctx.lineWidth = lineWidth;
+
+                    ctx.strokeStyle = color;
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                }
+            }
+        });
+
+        // Функция для переключения режима ластика
+        function setEraser() {
+            isEraser = !isEraser;
+
+            if (isEraser) {
+                ctx.strokeStyle = "white"; // Устанавливаем белый цвет для ластика
+            } else {
+                // Возвращаем выбранный цвет
+                var color = document.getElementById("colorPicker").value;
+                ctx.strokeStyle = color;
+            }
+        }
+
+        // Функция для очистки всего холста
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+   
 </body>
